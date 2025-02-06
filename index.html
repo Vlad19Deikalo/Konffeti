@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма для Telegram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Введіть дані</h2>
+        <form id="telegramForm">
+            <input type="text" id="name" placeholder="Ваше ім'я" required>
+            <input type="tel" id="phone" placeholder="Ваш номер телефону" required>
+            <button type="submit">Надіслати</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('telegramForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let name = document.getElementById('name').value;
+            let phone = document.getElementById('phone').value;
+            
+            let botToken = '7625692479:AAGPTjZKZSDtqdXs3gQ8UBk4s7qHfb7L9s8';  // Замініть на токен Konffeti_bot
+            let chatId = '-1002477055105';  // Замініть на ID чату
+            let message = `Нове повідомлення від Konffeti_bot!\nІм'я: ${name}\nТелефон: ${phone}`;
+            
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('Повідомлення надіслано!');
+                } else {
+                    alert('Помилка надсилання!');
+                }
+            })
+            .catch(error => alert('Помилка: ' + error));
+        });
+    </script>
+</body>
+</html>
