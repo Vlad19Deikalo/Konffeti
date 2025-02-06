@@ -6,6 +6,9 @@
     <title>Форма для Telegram</title>
     <style>
         body {
+            background-color: red; /* Червоний фон */
+            color: white; /* Білий текст */
+            text-align: center;
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -13,26 +16,52 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            box-sizing: border-box;
         }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            overflow: hidden; /* Запобігає виходу за межі */
+        }
+        
+        .logo img {
+            width: auto;
+            max-width: 60%;
+            height: auto;
+            max-height: 300px;
+            border-radius: 50%; /* Заокруглює зображення в коло (для квадратних зображень) */   
+        }
+        
+        
+
+        .text {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
         .content {
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%; /* Розтягуємо на всю ширину */
-            height: 100%; /* Розтягуємо на всю висоту */
-            max-width: 100%;
-        }
-        h2 {
+            width: 90%;
+            max-width: 400px;
+            color: black; /* Чорний текст для контенту */
             text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
             color: #e74c3c;
         }
+
         .form-container {
             margin-top: 20px;
         }
+
         input, button {
             display: block;
             width: 100%;
@@ -42,83 +71,65 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
+
         button {
             background-color: #e74c3c;
             color: white;
             border: none;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #c0392b;
         }
+
         .footer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             margin-top: 20px;
-            width: 100%;
-        }
-        .footer .contact-info {
             font-size: 14px;
-            color: #555;
-            text-align: center;
         }
+
         .footer a {
             color: #e74c3c;
             text-decoration: none;
-            font-size: 14px;
         }
+
         .footer a:hover {
             text-decoration: underline;
         }
+
         .footer .social-icon {
             width: 30px;
             height: 30px;
             margin-top: 10px;
         }
-
-        /* Адаптивний дизайн */
-        @media (max-width: 1024px) {
-            .content {
-                padding: 20px;
-                width: 100%;
-            }
+        .text {
+            background-color: #ffffff; /* Фон для тексту */
+            color: #e74c3c; /* Білий текст */
+            padding: 20px; /* Відступи з усіх боків */
+            border-radius: 20px; /* Заокруглення кутів */
+            font-family: 'Arial', sans-serif; /* Шрифт */
+            text-align: center; /* Вирівнювання по центру */
+            font-weight: bold; /* Жирний шрифт */
+            font-style: italic; /* Курсив */
         }
-
-        @media (max-width: 768px) {
-            h2 {
-                font-size: 22px;
-            }
-            .footer .contact-info {
-                font-size: 12px;
-            }
-            .footer a {
-                font-size: 12px;
-            }
-            .footer .social-icon {
-                width: 25px;
-                height: 25px;
-            }
+        
+        .text h1 {
+            font-size: 36px; /* Розмір шрифту */
+            margin: 0; /* Відсутність зовнішніх відступів */
         }
-
-        @media (max-width: 480px) {
-            .content {
-                padding: 15px;
-                width: 100%;
-            }
-            h2 {
-                font-size: 18px;
-            }
-            input, button {
-                padding: 10px;
-            }
-        }
+        
+        
     </style>
 </head>
 <body>
+    <div class="logo">
+        <img src="Konffeti (1).jpg" alt="Logo Konffeti">
+    </div>
+    <div class="text">
+        <h1>KONFFETI</h1>
+    </div>
     <div class="content">
         <h2>Введіть дані</h2>
-        
         <div class="form-container">
             <form id="telegramForm">
                 <input type="text" id="name" placeholder="Ваше ім'я" required>
@@ -126,7 +137,6 @@
                 <button type="submit">Надіслати</button>
             </form>
         </div>
-
         <div class="footer">
             <div class="contact-info">
                 <div>Телефон: +38 099 123 4567</div>
@@ -145,20 +155,14 @@
             let name = document.getElementById('name').value;
             let phone = document.getElementById('phone').value;
             
-            let botToken = '7625692479:AAGPTjZKZSDtqdXs3gQ8UBk4s7qHfb7L9s8';  // Замініть на токен Konffeti_bot
-            let chatId = '-1002477055105';  // Замініть на ID чату
+            let botToken = '7625692479:AAGPTjZKZSDtqdXs3gQ8UBk4s7qHfb7L9s8'; // Замініть на ваш бот-токен
+            let chatId = '-1002477055105'; // Замініть на ваш ID чату
             let message = `Нове повідомлення від Konffeti_bot!\nІм'я: ${name}\nТелефон: ${phone}`;
             
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message,
-                    parse_mode: 'HTML'
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'HTML' })
             })
             .then(response => response.json())
             .then(data => {
